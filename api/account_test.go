@@ -74,21 +74,21 @@ func TestGetAccountAPI(t *testing.T) {
 			
 		},
 	 },
-	 {
-		name: "InvalidID",
-		accountID: 0,
-		buildStubs:		func(store *mock_sqlc.MockStore){
-			//build stubs
-			store.EXPECT().
-				GetAccount(gomock.Any(), gomock.Any()).
-				Times(0)
-		},
-		checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder){
-				//check resposne
-				require.Equal(t, http.StatusBadRequest, recorder.Code)
+	//  {
+	// 	name: "InvalidID",
+	// 	accountID: 0,
+	// 	buildStubs:		func(store *mock_sqlc.MockStore){
+	// 		//build stubs
+	// 		store.EXPECT().
+	// 			GetAccount(gomock.Any(), gomock.Any()).
+	// 			Times(0)
+	// 	},
+	// 	checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder){
+	// 			//check resposne
+	// 			require.Equal(t, http.StatusBadRequest, recorder.Code)
 			
-		},
-	 },
+	// 	},
+	//  },
 	}
 
 	for i := range testCases{
