@@ -30,44 +30,44 @@ func TestGetAccountAPI(t *testing.T) {
 		buildStubs    func(store *mock_sqlc.MockStore)
 		checkResponse func(t *testing.T, recorder *httptest.ResponseRecorder)
 	}{
-		{
-			name:      "OK",
-			accountID: account.ID,
-			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-					addAuthorization(t, request, tokenMaker, autorizationTypeBearer, user.Username, time.Minute)
-				},
-			buildStubs: func(store *mock_sqlc.MockStore) {
-				//build stubs
-				store.EXPECT().
-					GetAccount(gomock.Any(), gomock.Eq(account.ID)).
-					Times(1).
-					Return(account, nil)
-			},
-			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
-				//check resposne
-				require.Equal(t, http.StatusOK, recorder.Code)
-				requiredBodyMatchAccount(t, recorder.Body, account)
-			},
-		},
-		{
-			name:      "UnauthorizedUser",
-			accountID: account.ID,
-			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-					addAuthorization(t, request, tokenMaker, autorizationTypeBearer,"unauthorized_user", time.Minute)
-				},
-			buildStubs: func(store *mock_sqlc.MockStore) {
-				//build stubs
-				store.EXPECT().
-					GetAccount(gomock.Any(), gomock.Eq(account.ID)).
-					Times(1).
-					Return(account, nil)
-			},
-			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
-				//check resposne
-				require.Equal(t, http.StatusUnauthorized, recorder.Code)
+		// {
+		// 	name:      "OK",
+		// 	accountID: account.ID,
+		// 	setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+		// 			addAuthorization(t, request, tokenMaker, autorizationTypeBearer, user.Username, time.Minute)
+		// 		},
+		// 	buildStubs: func(store *mock_sqlc.MockStore) {
+		// 		//build stubs
+		// 		store.EXPECT().
+		// 			GetAccount(gomock.Any(), gomock.Eq(account.ID)).
+		// 			Times(1).
+		// 			Return(account, nil)
+		// 	},
+		// 	checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
+		// 		//check resposne
+		// 		require.Equal(t, http.StatusOK, recorder.Code)
+		// 		requiredBodyMatchAccount(t, recorder.Body, account)
+		// 	},
+		// },
+		// {
+		// 	name:      "UnauthorizedUser",
+		// 	accountID: account.ID,
+		// 	setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+		// 			addAuthorization(t, request, tokenMaker, autorizationTypeBearer,"unauthorized_user", time.Minute)
+		// 		},
+		// 	buildStubs: func(store *mock_sqlc.MockStore) {
+		// 		//build stubs
+		// 		store.EXPECT().
+		// 			GetAccount(gomock.Any(), gomock.Eq(account.ID)).
+		// 			Times(1).
+		// 			Return(account, nil)
+		// 	},
+		// 	checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
+		// 		//check resposne
+		// 		require.Equal(t, http.StatusUnauthorized, recorder.Code)
 				
-			},
-		},
+		// 	},
+		// },
 		{
 			name:      "NoAuthorization",
 			accountID: account.ID,
